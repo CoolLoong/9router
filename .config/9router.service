@@ -1,0 +1,14 @@
+[Unit]
+Description=9Router AI Gateway
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/9router --tray --no-browser --skip-update --host 0.0.0.0 --port 20128
+Restart=always
+RestartSec=3
+KillMode=control-group
+
+[Install]
+WantedBy=default.target

@@ -171,7 +171,7 @@ function buildCliPackage() {
   // Step 1: Build app with Next.js (workspace tracing root → traced node_modules in standalone).
   console.log("1️⃣  Building Next.js app...");
   try {
-    execSync("npm run build", {
+    execSync("bun run build", {
       stdio: "inherit",
       cwd: appDir,
       env: {
@@ -324,7 +324,7 @@ function buildCliPackage() {
   // Step 8: Build MITM server (config driven - see app/cli/scripts/buildMitm.js)
   console.log("8️⃣  Building MITM server...");
   try {
-    execSync("node scripts/buildMitm.js", { stdio: "inherit", cwd: cliDir });
+    execSync("bun scripts/buildMitm.js", { stdio: "inherit", cwd: cliDir });
     console.log("✅ MITM server build completed\n");
   } catch (error) {
     console.error("❌ MITM build failed");
