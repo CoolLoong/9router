@@ -24,4 +24,7 @@ package() {
   done
   ln -s /opt/9router/cli.js "${pkgdir}/usr/bin/9router"
   install -Dm644 "${startdir}/.config/9router.service" "${pkgdir}/usr/lib/systemd/user/9router.service"
+  # Restart the user service after upgrade — a leftover process from the previous
+  # package version serves a stale build manifest and /dashboard 404s otherwise.
+  install -Dm644 "${startdir}/.config/9router-restart.hook" "${pkgdir}/usr/share/libalpm/hooks/9router-restart.hook"
 }

@@ -1,0 +1,9 @@
+[Trigger]
+Operation = Upgrade
+Type = Package
+Target = 9router-local
+
+[Action]
+Description = Restarting 9router service after upgrade...
+When = PostTransaction
+Exec = /usr/bin/bash -c 'if command -v systemctl >/dev/null 2>&1 && systemctl --user is-enabled 9router.service >/dev/null 2>&1; then systemctl --user restart 9router.service >/dev/null 2>&1; fi'
