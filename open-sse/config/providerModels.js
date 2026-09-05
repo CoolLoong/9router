@@ -5,7 +5,7 @@ import { PROVIDER_MODELS } from "../providers/index.js";
 import { modelQuotaFamily, modelStrip, modelTargetFormat, modelSupportedFormats, normalizeModelId } from "../providers/models/schema.js";
 import { CODEX_REVIEW_SUFFIX } from "../providers/models/helpers.js";
 import { stripRecognizedContextSuffix } from "../services/model.js";
-
+import { FORMATS } from "../translator/formats.js";
 export { PROVIDER_MODELS };
 
 
@@ -52,6 +52,9 @@ export function findModelName(aliasOrId, modelId) {
 }
 
 export function getModelTargetFormat(aliasOrId, modelId) {
+  if ((!aliasOrId || aliasOrId === "oc" || aliasOrId === "opencode") && isMuseSparkModel(modelId)) {
+    return FORMATS.OPENAI_RESPONSES;
+  }
   const models = PROVIDER_MODELS[aliasOrId];
   if (!models) return null;
   return modelTargetFormat(findModel(models, modelId, aliasOrId));

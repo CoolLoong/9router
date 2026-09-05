@@ -88,3 +88,6 @@ graphify-out/*
 .next-analyze/*
 .makepkg/
 pkg/*
+
+# Kiro local workspace state
+.kiro/
