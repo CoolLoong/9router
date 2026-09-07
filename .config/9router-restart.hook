@@ -4,6 +4,10 @@ Type = Package
 Target = 9router-local
 
 [Action]
-Description = Restarting 9router service after upgrade...
+Description = Restarting 9router user service after upgrade...
 When = PostTransaction
-Exec = /usr/bin/bash -c 'if command -v systemctl >/dev/null 2>&1 && systemctl --user is-enabled 9router.service >/dev/null 2>&1; then systemctl --user restart 9router.service >/dev/null 2>&1; fi'
+# pacman hooks run as root, so --user services must be reached via the
+# owning user's systemd user manager (machinectl), not bare `systemctl --user`.
+# The old process would otherwise keep serving a stale build manifest and
+# /dashboard 404s after the upgrade.
+Exec = /usr/bin/bash -c 'if command -v systemctl >/dev/null 2>&1 && systemctl --machine=wing@.host --user is-enabled 9router.service >/dev/null 2>&1; then systemctl --machine=wing@.host --user restart 9router.service >/dev/null 2>&1; fi'
